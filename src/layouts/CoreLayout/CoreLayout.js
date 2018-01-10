@@ -59,10 +59,10 @@ const theme = createMuiTheme({
 
 export const CoreLayout = ({ children }) => (
   <MuiThemeProvider theme={theme}>
-    <div className={classes.container}>
+    <div>
       <div className={classes.children}>{children}</div>
       <Notifications />
-    </div>
+      </div>
   </MuiThemeProvider>
 );
 

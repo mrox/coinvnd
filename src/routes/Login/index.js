@@ -1,6 +1,7 @@
 import { LOGIN_PATH as path } from 'constants'
 
 export default store => ({
+  // path,
   path,
   /*  Async getComponent is only invoked when route matches   */
   getComponent(nextState, cb) {

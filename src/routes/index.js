@@ -1,11 +1,14 @@
 import CoreLayout from "../layouts/CoreLayout";
+import DashboardLayout from "../layouts/DashboardLayout";
+import { HomeLayout } from "../layouts/HomeLayout/HomeLayout";
 import Home from "./Home";
 import LoginRoute from "./Login";
 import SignupRoute from "./Signup";
 import ProjectsRoute from "./Projects";
 import AccountRoute from "./Account";
 import NotFoundRoute from "./NotFound";
-import DashboardLayout from "../layouts/DashboardLayout";
+import Dashboard from './Dashboard';
+// import name from './';
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -13,14 +16,16 @@ import DashboardLayout from "../layouts/DashboardLayout";
 export const createRoutes = store => ({
   path: "/",
   component: CoreLayout,
-  indexRoute: Home,
+  // indexRoute: Home,
+  indexRoute: { onEnter: (nextState, replace) => replace('/home') },
   childRoutes: [
     {
       path: "/dashboard",
       component: DashboardLayout,
-      // indexRoute: Home,
+      indexRoute: Dashboard,
       childRoutes: [
         AccountRoute(store),
+        ProjectsRoute(store)
         // LoginRoute(store),
         // SignupRoute(store),
         // ProjectsRoute(store),
@@ -30,11 +35,18 @@ export const createRoutes = store => ({
         // NotFoundRoute(store)
       ]
     },
-
-    AccountRoute(store),
-    LoginRoute(store),
-    SignupRoute(store),
-    ProjectsRoute(store),
+    {
+      path: '/home',
+      component: HomeLayout,
+      indexRoute: Home,
+      childRoutes : [
+        LoginRoute(store),
+        SignupRoute(store)
+      ]
+    },
+    // LoginRoute(store),
+    // SignupRoute(store),
+    
     // AsyncRoute(store) // async routes setup by passing store
     // SyncRoute, // sync routes just need route object by itself
     /* Place all Routes above here so NotFoundRoute can act as a 404 page */

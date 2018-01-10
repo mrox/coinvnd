@@ -2,11 +2,16 @@ import React from 'react'
 import { Link } from 'react-router'
 import { paths } from 'constants'
 import classes from './Home.scss'
+import background from 'static/final_landing_page_investment.png';
 const authWrapperUrl = 'https://github.com/mjrussell/redux-auth-wrapper'
 const reactRouterUrl = 'https://github.com/ReactTraining/react-router'
 
 export const Home = () => (
-  <div></div>
+  <div>
+    <a href="https://nono-ec220.firebaseapp.com" className={classes.hidenButton}>sdfs</a>
+    <img className={classes.background} src={background}></img>
+  </div>
+
   // <div className={classes.container}>
   //   <div className="flex-row-center">
   //     <h2>Home Route</h2>
