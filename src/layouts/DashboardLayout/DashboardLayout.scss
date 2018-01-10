@@ -8,9 +8,29 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.children {
+.childrenClose {
   // height: calc(100% - 48px);
   // overflow-y: scroll;
   margin-top: 80px;
+  margin-left: 60px;
   background-color: $background;
+}
+.childrenOpen{
+  margin-top: 80px;
+  margin-left: 240px;
+  background-color: $background;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1)
+}
+
+.drawerPaperOpen{
+  width: 240px;
+    overflow-x: hidden;
+}
+.drawerPaperClose{
+  width: 60px;
+    overflow-x: hidden;
+    
+}
+::-webkit-scrollbar {
+display: none;
 }

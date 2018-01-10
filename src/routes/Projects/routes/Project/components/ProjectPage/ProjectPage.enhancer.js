@@ -3,19 +3,22 @@ import { connect } from "react-redux";
 import { firebaseConnect, getVal } from "react-redux-firebase";
 import { spinnerWhileLoading } from "utils/components";
 import { withHandlers, withStateHandlers, pure } from "recompose";
+import { firestoreConnect } from 'react-redux-firebase'
 
 export default compose(
   // Create listener for project
-  firebaseConnect(({ params }) => [
+  firestoreConnect(({ params }) => [
     {
-      path: `projects/${params.projectname}`
+      collection: 'projects',
+      doc:params.projectname
+      // path: `projects/${params.projectname}`
     }
   ]),
   // Map project from redux state to props
-  connect(({ firebase: { data } }, { params }) => ({
+  connect(({ firestore: { data } }, { params }) => ({
     projeca: getVal(data, `projects/${params.projectname}`)
   })),
-  
+
   spinnerWhileLoading(["projeca"]),
 
   withHandlers({

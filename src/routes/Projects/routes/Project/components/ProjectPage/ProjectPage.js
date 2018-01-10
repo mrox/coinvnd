@@ -9,17 +9,11 @@ const Project = ({ params, projeca, viewProject }) => (
   <div className={classes.container}>
     <Card className={classes.card}>
       <CardContent>
-      <Button onClick={() => viewProject(projeca)}>abc</Button>
-        <Typography className={classes.title} component="h2">
-          {
-            JSON.stringify(projeca)
-            // project.name || 'Project'
-          }
+       
+        <Typography component="H3">
+          {projeca.name}
         </Typography>
-        <Typography className={classes.subtitle}>
-          {params.projectname}
-        </Typography>
-        <Typography component="p">
+        <Typography component="div">
           <pre>{JSON.stringify(projeca, null, 2)}</pre>
         </Typography>
       </CardContent>

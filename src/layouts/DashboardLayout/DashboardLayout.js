@@ -1,99 +1,80 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { compose } from "redux";
+import { withHandlers, withStateHandlers } from "recompose";
+
 import Navbar from "containers/Navbar";
 
 import classes from "./DashboardLayout.scss";
 import { Notifications } from "modules/notification";
 import "styles/core.scss";
 import { MuiThemeProvider, createMuiTheme } from "material-ui/styles";
+import Drawer from "material-ui/Drawer";
+import { withStyles } from "material-ui/styles";
+
+import classNames from "classnames";
+import IconButton from "material-ui/IconButton";
+import MenuIcon from "material-ui-icons/Menu";
+import Divider from "material-ui/Divider";
+import List from "material-ui/List";
+import { mailFolderListItems, otherMailFolderListItems } from "./tileData";
 
 import purple from "material-ui/colors/purple";
 import green from "material-ui/colors/green";
 import indigo from "material-ui/colors/indigo";
 
-const font = '"Open Sans", sans-serif';
-const theme = createMuiTheme({
-  palette: {
-    primary: indigo // Purple and green play nicely together.
-    //   secondary: {
-    //     ...green,
-    //     A400: "#00e677"
-    //   },
-    //   error: red
-  },
-  typography: {
-    fontFamily: font,
-    button: {
-      // height: 48,
-    }
-  },
-  shadows: [
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    "",
-    ""
-  ],
-  overrides: {
-    MuiButton: {
-      root: {
-        // borderColor:'#BCCCEB',
-        fontWeight: "400",
-        // color: '#BCCCEB !important',
-        // fontSize: '16px !important',
-        // letterSpacing: '0 !important',
-        // fontStyle: 'normal!important',
-        textTransform: "unset!important"
-        // border: '1px solid rgba(0,0,0,.15)',
-        // margin: '4px',
-        // padding:"0 16px"
-        // fontStyle: 'italic',
-        // borderRadius: 100,
-      }
-    },
-    MuiAppBar: {
-      root: {
-        boxShadow: "0 0px 1px rgba(0,0,0,.09)"
-      }
-    },
-    MuiPaper: {
-      root: {
-        boxShadow: "0 3px 5px 2px rgba(231, 231, 231, 0.3)"
-      }
-    }
-  }
-});
+const drawerWidth = 100;
 
-export const DashboardLayout = ({ children }) => (
+const enhance = compose(
+  withStateHandlers(
+    ({ initialMenuOpen = false }) => ({
+      newMenuOpen: initialMenuOpen
+    }),
+    // Add state handlers as props
+    {
+      toggleMenu: ({ newMenuOpen }) => () => ({
+        newMenuOpen: !newMenuOpen
+      })
+    }
+  ),
+  withHandlers({
+    addTodo: props => () => {
+      console.log(props.leftMenuOpen);
+    }
+    // props.firestore.add('todos', { text: props.inputVal || 'sample', done: false })
+  })
+);
+
+export const DashboardLayout = ({
+  children,
+  addTodo,
+  newMenuOpen,
+  toggleMenu
+}) => {
+  // console.log(leftMenuOpen);
+  // console.log(leftMenuOpen);
+  return (
     <div>
-      <Navbar />
-      <div className={classes.children}>{children}</div>
+
+      <Drawer
+        type="permanent"
+        className={newMenuOpen ? classes.drawerPaperClose : classes.drawerPaperOpen}
+      >
+        <button onClick={toggleMenu}>sdf</button>
+        <div className={newMenuOpen ? classes.drawerPaperClose : classes.drawerPaperOpen}>
+          <List className={classes.list}>{mailFolderListItems}</List>
+          <Divider />
+          <List className={classes.list}>{otherMailFolderListItems}</List>
+        </div>
+      </Drawer>
+      <div className={newMenuOpen ? classes.childrenClose : classes.childrenOpen}>{children}</div>
       <Notifications />
     </div>
-);
+  );
+};
 
 DashboardLayout.propTypes = {
   children: PropTypes.element.isRequired
 };
 
-export default DashboardLayout;
+export default enhance(DashboardLayout);
